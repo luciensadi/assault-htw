@@ -114,7 +114,7 @@ void do_awhere( CHAR_DATA *ch, char *argument )
             else
                 sprintf( loc, "%3d/%-3d", wch->x, wch->y );
 
-            sprintf( buf+strlen(buf), "@@W%-15s @@d- @@a%s @@R[@@e%s@@R] %s%s%s @@e%3d@@c/@@R%-3d HP   @@bFighting@@c: @@y%3s@@N\n\r", wch->name, loc, planet_table[wch->z].name, (wch->in_building)?"@@c(@@a":"", (wch->in_building)?wch->in_building->name:"", (wch->in_building)?"@@c)":"", wch->hit, wch->max_hit, (wch->fighttimer>0)?"Yes":"No" );
+            snprintf( buf+strlen(buf), sizeof(buf) - strlen(buf), "@@W%-15s @@d- @@a%s @@R[@@e%s@@R] %s%s%s @@e%3d@@c/@@R%-3d HP   @@bFighting@@c: @@y%3s@@N\n\r", wch->name, loc, planet_table[wch->z].name, (wch->in_building)?"@@c(@@a":"", (wch->in_building)?wch->in_building->name:"", (wch->in_building)?"@@c)":"", wch->hit, wch->max_hit, (wch->fighttimer>0)?"Yes":"No" );
         }
     }
     send_to_char( buf, ch );

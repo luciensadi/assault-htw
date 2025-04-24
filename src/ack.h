@@ -1,3 +1,6 @@
+#ifndef __ACK_H__
+#define __ACK_H__
+
 /***************************************************************************
  *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,        *
  *  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   *
@@ -1318,4 +1321,6 @@ void load_web_data  args( ( void ) );
 
 #ifndef DEC_GLOBALS_H
 #include "globals.h"
+#endif
+
 #endif

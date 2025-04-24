@@ -70,7 +70,7 @@ void talk_channel(CHAR_DATA *ch, char *argument, int channel, const char *verb) 
 	title[0] = '\0';
 
 	if (argument[0] == '\0') {
-		sprintf(buf,
+		snprintf(buf, sizeof(buf),
 				"%s what?\n\r\n\rTo turn the channel off, use the @@eChannel@@N command.\n\r",
 				verb);
 		buf[0] = UPPER(buf[0]);
@@ -94,7 +94,7 @@ void talk_channel(CHAR_DATA *ch, char *argument, int channel, const char *verb) 
 	}
 
 	if (IS_SET(ch->act, PLR_SILENCE)) {
-		sprintf(buf, "You can't %s.\n\r", verb);
+		snprintf(buf, sizeof(buf), "You can't %s.\n\r", verb);
 		send_to_char(buf, ch);
 		return;
 	}
@@ -116,27 +116,27 @@ void talk_channel(CHAR_DATA *ch, char *argument, int channel, const char *verb) 
 	switch (channel) {
         default:
             if ((IS_SET(ch->config, CONFIG_ECHAN)) && !IS_SET(ch->act, PLR_WIZINVIS))
-                sprintf(title, "%s", ch->pcdata->title);
-            sprintf(buf, "%s %s%s%s%s $t@@N", verb, (fake) ? "Someone" : "$n",
+                snprintf(title, sizeof(title), "%s", ch->pcdata->title);
+            snprintf(buf, sizeof(buf), "%s %s%s%s%s $t@@N", verb, (fake) ? "Someone" : "$n",
                     (sysdata.pikamod) ? "Mon" : "", title, gemote ? "" : ":");
             act(buf, ch, argument, NULL, TO_CHAR);
             break;
 
         case CHANNEL_CREATOR:
-            sprintf(buf, "@@R(@@e( @@mCREATOR: @@W%s @@g says @@W'@@g$t@@W'@@N",
+            snprintf(buf, sizeof(buf), "@@R(@@e( @@mCREATOR: @@W%s @@g says @@W'@@g$t@@W'@@N",
                     ch->name);
             act(buf, ch, argument, NULL, TO_CHAR);
             break;
 
         case CHANNEL_IMMTALK:
-            sprintf(buf, "@@R(@@e( @@W$n @@gsays @@W'@@g$t@@W'@@N");
+            snprintf(buf, sizeof(buf), "@@R(@@e( @@W$n @@gsays @@W'@@g$t@@W'@@N");
             act(buf, ch, argument, NULL, TO_CHAR);
             break;
 
         case CHANNEL_ALLIANCE:
             if ((IS_SET(ch->config, CONFIG_ECHAN)) && !IS_SET(ch->act, PLR_WIZINVIS))
-                sprintf(title, "%s", ch->pcdata->title);
-            sprintf(buf, "%s $n%s%s $t@@N", verb, title, gemote ? "" : ":");
+                snprintf(title, sizeof(title), "%s", ch->pcdata->title);
+            snprintf(buf, sizeof(buf), "%s $n%s%s $t@@N", verb, title, gemote ? "" : ":");
             act(buf, ch, argument, NULL, TO_CHAR);
             break;
 
@@ -181,29 +181,29 @@ void talk_channel(CHAR_DATA *ch, char *argument, int channel, const char *verb) 
             
             switch (channel) {
             default:
-                sprintf(ansi, "%s", buf);
+                snprintf(ansi, sizeof(ansi), "%s", buf);
                 break;
             case CHANNEL_MUSIC:
-                sprintf(ansi, "%s%s%s", color_string(vch, "music"), buf,
+								snprintf(ansi, sizeof(ansi), "%s%s%s", color_string(vch, "music"), buf,
                         color_string(vch, "normal"));
                 break;
             case CHANNEL_FLAME:
-                sprintf(ansi, "%s%s%s", color_string(vch, "flame"), buf,
+								snprintf(ansi, sizeof(ansi), "%s%s%s", color_string(vch, "flame"), buf,
                         color_string(vch, "normal"));
                 break;
             case CHANNEL_GOSSIP:
-                sprintf(ansi, "%s%s%s", color_string(vch, "gossip"),
+								snprintf(ansi, sizeof(ansi), "%s%s%s", color_string(vch, "gossip"),
                         buf, color_string(vch, "normal"));
                 break;
             case CHANNEL_OOC:
-                sprintf(ansi, "%s%s%s", color_string(vch, "ooc"), buf,
+								snprintf(ansi, sizeof(ansi), "%s%s%s", color_string(vch, "ooc"), buf,
                         color_string(vch, "normal"));
                 break;
 
             }
             if (fake && IS_IMMORTAL(vch)
                     && get_trust(vch) >= get_trust(ch)) {
-                sprintf(buf2, " (%s)", ch->name);
+                snprintf(buf2, sizeof(buf2), " (%s)", ch->name);
                 safe_strcat(MSL, ansi, buf2);
             }
             act(ansi, ch, argument, vch, TO_VICT);
@@ -226,7 +226,7 @@ void talk_channel(CHAR_DATA *ch, char *argument, int channel, const char *verb) 
                 || IS_SET(ch->act,
                         PLR_INCOG) || IS_SET(ch->act, PLR_WIZINVIS ))
             invis = TRUE;
-        sprintf(buf, "%s %s: %s\n\r", verb,
+        snprintf(buf, sizeof(buf), "%s %s: %s\n\r", verb,
                 (invis || fake) ? "Someone" : ch->name, argument);
 
         free_string(history10);
@@ -251,7 +251,7 @@ void talk_channel(CHAR_DATA *ch, char *argument, int channel, const char *verb) 
         history1 = str_dup(buf);
     } else if (channel == CHANNEL_ALLIANCE) {
         int alli = ch->pcdata->alliance;
-        sprintf(buf, "%s: %s\n\r", ch->name, argument);
+        snprintf(buf, sizeof(buf), "%s: %s\n\r", ch->name, argument);
         free_string(alliance_table[alli].history);
         alliance_table[alli].history = str_dup(buf);
     }
@@ -346,7 +346,7 @@ void do_atalk(CHAR_DATA *ch, char *argument) {
 		ch->pcdata->alliance = value;
 	}
 
-	sprintf(buf, "@@g[@@W%s@@g]@@N", alliance_table[ch->pcdata->alliance].name);
+	snprintf(buf, sizeof(buf), "@@g[@@W%s@@g]@@N", alliance_table[ch->pcdata->alliance].name);
 	talk_channel(ch, argument, CHANNEL_ALLIANCE, buf);
 	if (get_trust(ch) >= 84)
 		ch->pcdata->alliance = al;
@@ -402,7 +402,7 @@ void do_osay(CHAR_DATA *ch, char *argument) {
 	CHAR_DATA *ppl;
 
 	if (IS_SET(ch->act, PLR_SILENCE)) {
-		sprintf(buf, "You can't speak.\n\r");
+		snprintf(buf, sizeof(buf), "You can't speak.\n\r");
 		send_to_char(buf, ch);
 		return;
 	}
@@ -411,14 +411,14 @@ void do_osay(CHAR_DATA *ch, char *argument) {
 		return;
 	}
 
-	sprintf(buf, "You say ooc'ly '%s$T%s'", color_string(ch, "say"),
+	snprintf(buf, sizeof(buf), "You say ooc'ly '%s$T%s'", color_string(ch, "say"),
 			color_string(ch, "normal"));
 	act(buf, ch, NULL, argument, TO_CHAR);
 	for (ppl = map_ch[ch->x][ch->y][ch->z]; ppl != NULL; ppl =
 			ppl->next_in_room) {
 		if (ppl == ch)
 			continue;
-		sprintf(buf, "$n says ooc'ly '%s$t%s'", color_string(ppl, "say"),
+		snprintf(buf, sizeof(buf), "$n says ooc'ly '%s$t%s'", color_string(ppl, "say"),
 				color_string(ppl, "normal"));
 
 		act(buf, ch, argument, ppl, TO_VICT);
@@ -431,7 +431,7 @@ void do_say(CHAR_DATA *ch, char *argument) {
 	CHAR_DATA *ppl;
 
 	if (IS_SET(ch->act, PLR_SILENCE)) {
-		sprintf(buf, "You can't speak.\n\r");
+		snprintf(buf, sizeof(buf), "You can't speak.\n\r");
 		send_to_char(buf, ch);
 		return;
 	}
@@ -441,7 +441,7 @@ void do_say(CHAR_DATA *ch, char *argument) {
 		return;
 	}
 
-	sprintf(buf, "@@aYou say, '@@N%s$T%s@@a'@@N", color_string(ch, "say"),
+	snprintf(buf, sizeof(buf), "@@aYou say, '@@N%s$T%s@@a'@@N", color_string(ch, "say"),
 			color_string(ch, "normal"));
 	act(buf, ch, NULL, argument, TO_CHAR);
 	for (ppl = map_ch[ch->x][ch->y][ch->z]; ppl != NULL; ppl =
@@ -450,7 +450,7 @@ void do_say(CHAR_DATA *ch, char *argument) {
 			continue;
 		if (ppl->z != ch->z)
 			continue;
-		sprintf(buf, "@@a$n says, '@@N%s$t%s@@a'@@N", color_string(ppl, "say"),
+		snprintf(buf, sizeof(buf), "@@a$n says, '@@N%s$t%s@@a'@@N", color_string(ppl, "say"),
 				color_string(ppl, "normal"));
 
 		act(buf, ch, argument, ppl, TO_VICT);
@@ -470,11 +470,11 @@ void do_ignore(CHAR_DATA *ch, char *argument) {
 		send_to_char("Current people to be ignored:\n\r ", ch);
 		for (i = 0; i < 3; i++) {
 			if (ch->pcdata->ignore_list[i] != NULL) {
-				sprintf(buf, "  %d) @@R%s@@g\n\r", i + 1,
+				snprintf(buf, sizeof(buf), "  %d) @@R%s@@g\n\r", i + 1,
 						ch->pcdata->ignore_list[i]);
 				send_to_char(buf, ch);
 			} else {
-				sprintf(buf, "  %d) @@Rnobody@@g\n\r", i + 1);
+				snprintf(buf, sizeof(buf), "  %d) @@Rnobody@@g\n\r", i + 1);
 				send_to_char(buf, ch);
 			}
 		}
@@ -504,7 +504,7 @@ void do_ignore(CHAR_DATA *ch, char *argument) {
 	 {
 	 if( ch->pcdata->ignore_list[i] != NULL )
 	 {
-	 sprintf(buf, "  %d) @@R%s@@g\n\r",i+1,ch->pcdata->ignore_list[i]);
+	 snprintf(buf, sizeof(buf), "  %d) @@R%s@@g\n\r",i+1,ch->pcdata->ignore_list[i]);
 	 send_to_char( buf, ch );
 	 }
 	 else
@@ -557,7 +557,7 @@ void do_ignore(CHAR_DATA *ch, char *argument) {
 	}
 	send_to_char("\nCurrent person to be ignored:\n\r", ch);
 	for (i = 0; i < 3; i++) {
-		sprintf(buf, "  %d) @@R%s@@g\n\r", i + 1, ch->pcdata->ignore_list[i]);
+		snprintf(buf, sizeof(buf), "  %d) @@R%s@@g\n\r", i + 1, ch->pcdata->ignore_list[i]);
 		send_to_char(buf, ch);
 	}
 	for (i = 0; i < 3; i++)
@@ -620,17 +620,17 @@ void do_tell(CHAR_DATA *ch, char *argument) {
 	if ((!str_cmp(victim->pcdata->ignore_list[0], ch->name)
 			|| !str_cmp(victim->pcdata->ignore_list[1], ch->name)
 			|| !str_cmp(victim->pcdata->ignore_list[2], ch->name))) {
-		sprintf(buf, "%s @@Ris ignoring you!!@@g\n\r", victim->name);
+		snprintf(buf, sizeof(buf), "%s @@Ris ignoring you!!@@g\n\r", victim->name);
 		send_to_char(buf, ch);
 		return;
 	}
 
-	sprintf(buf, "@@rYou tell $N, '@@N%s$t%s@@r'@@N.", color_string(ch, "tell"),
+	snprintf(buf, sizeof(buf), "@@rYou tell $N, '@@N%s$t%s@@r'@@N.", color_string(ch, "tell"),
 			color_string(ch, "normal"));
 	act(buf, ch, argument, victim, TO_CHAR);
 
 	if (victim->desc) {
-		sprintf(buf, "@@r%s%s$n%s tells you, '@@N%s$t%s@@r'@@N.",
+		snprintf(buf, sizeof(buf), "@@r%s%s$n%s tells you, '@@N%s$t%s@@r'@@N.",
 				(victim->desc->mxp) ? "\e[1z" : "",
 				MXPTAG(victim->desc, "player $n"),
 				MXPTAG(victim->desc, "/player"), color_string(victim, "tell"),
@@ -638,7 +638,7 @@ void do_tell(CHAR_DATA *ch, char *argument) {
 
 		act(buf, ch, argument, victim, TO_VICT);
 		free_string(victim->last_tell);
-		sprintf(buf, "%s: %s", can_see(victim, ch) ? ch->name : "Someone",
+		snprintf(buf, sizeof(buf), "%s: %s", can_see(victim, ch) ? ch->name : "Someone",
 				argument);
 		victim->last_tell = str_dup(buf);
 		if (my_get_minutes(victim, TRUE) < 5) {
@@ -649,12 +649,12 @@ void do_tell(CHAR_DATA *ch, char *argument) {
 	}
 	victim->reply = ch;
 	if (victim->fake) {
-		sprintf(buf, "@@W[@@g%s@@W] Received a Tell from [@@g%s@@W]: @@g%s",
+		snprintf(buf, sizeof(buf), "@@W[@@g%s@@W] Received a Tell from [@@g%s@@W]: @@g%s",
 				victim->name, ch->name, argument);
 		monitor_chan(victim, buf, MONITOR_FAKE);
 	}
 	if (ch->fake) {
-		sprintf(buf, "@@W[@@g%s@@W] Sent a Tellto [@@g%s@@W]: @@g%s", ch->name,
+		snprintf(buf, sizeof(buf), "@@W[@@g%s@@W] Sent a Tellto [@@g%s@@W]: @@g%s", ch->name,
 				victim->name, argument);
 		monitor_chan(ch, buf, MONITOR_FAKE);
 	}
@@ -692,26 +692,26 @@ void do_reply(CHAR_DATA *ch, char *argument) {
 		return;
 	}
 
-	sprintf(buf, "@@rYou tell $N, '@@N%s$t%s@@r'@@N.", color_string(ch, "tell"),
+	snprintf(buf, sizeof(buf), "@@rYou tell $N, '@@N%s$t%s@@r'@@N.", color_string(ch, "tell"),
 			color_string(ch, "normal"));
 	act(buf, ch, argument, victim, TO_CHAR);
-	sprintf(buf, "@@r$n tells you, '@@N%s$t%s@@r'@@N.",
+	snprintf(buf, sizeof(buf), "@@r$n tells you, '@@N%s$t%s@@r'@@N.",
 			color_string(victim, "tell"), color_string(victim, "normal"));
 	act(buf, ch, argument, victim, TO_VICT);
 	victim->reply = ch;
 
 	free_string(victim->last_tell);
-	sprintf(buf, "%s: %s", can_see(victim, ch) ? ch->name : "Someone",
+	snprintf(buf, sizeof(buf), "%s: %s", can_see(victim, ch) ? ch->name : "Someone",
 			argument);
 	victim->last_tell = str_dup(buf);
 
 	if (victim->fake) {
-		sprintf(buf, "@@W[@@g%s@@W] Received a Tell from [@@g%s@@W]: @@g%s",
+		snprintf(buf, sizeof(buf), "@@W[@@g%s@@W] Received a Tell from [@@g%s@@W]: @@g%s",
 				victim->name, ch->name, argument);
 		monitor_chan(victim, buf, MONITOR_FAKE);
 	}
 	if (ch->fake) {
-		sprintf(buf, "@@W[@@g%s@@W] Sent a Tellto [@@g%s@@W]: @@g%s", ch->name,
+		snprintf(buf, sizeof(buf), "@@W[@@g%s@@W] Sent a Tellto [@@g%s@@W]: @@g%s", ch->name,
 				victim->name, argument);
 		monitor_chan(ch, buf, MONITOR_FAKE);
 	}
@@ -780,7 +780,7 @@ void do_quit(CHAR_DATA *ch, char *argument) {
 
 	if (!ban) {
 		if (ch->fighttimer > 0) {
-			sprintf(buf,
+			snprintf(buf, sizeof(buf),
 					"No way, you're fighting! Wait another %d seconds.\n\r",
 					ch->fighttimer / 8);
 			send_to_char(buf, ch);
@@ -822,7 +822,7 @@ void do_quit(CHAR_DATA *ch, char *argument) {
 
 	act("$n takes cover, and returns to the real world.", ch, NULL, NULL,
 			TO_ROOM);
-	sprintf(log_buf, "%s has left " mudnamenocolor "!", ch->name);
+	snprintf(log_buf, 2 * MAX_INPUT_LENGTH, "%s has left " mudnamenocolor "!", ch->name);
 	monitor_chan(ch, log_buf, MONITOR_CONNECT);
 	if (!IS_IMMORTAL(ch)
 			&& (!ch->in_building || ch->in_building->type != BUILDING_CLUB)
@@ -833,7 +833,7 @@ void do_quit(CHAR_DATA *ch, char *argument) {
 	p--;
 	if (p != web_data.num_players) {
 		char plr[4];
-		sprintf(plr, "%d", p);
+		snprintf(plr, sizeof(plr), "%d", p);
 		update_web_data(WEB_DATA_NUM_PLAYERS, plr);
 	}
 
@@ -851,7 +851,7 @@ void do_quit(CHAR_DATA *ch, char *argument) {
 				&& (!str_cmp(other_logins->character->name, ch->name))) {
 			if (other_logins->connected == CON_GET_OLD_PASSWORD) {
 				char logbuf[MSL] = "\0";
-				sprintf(logbuf,
+				snprintf(logbuf, sizeof(logbuf),
 						"CHEATER!!! Possible attempt to utilize eq dup bug, %s",
 						other_logins->character->name);
 
@@ -910,7 +910,7 @@ void do_save(CHAR_DATA *ch, char *argument) {
 	char buf[MAX_STRING_LENGTH];
 
 	save_char_obj(ch);
-	sprintf(buf, "Saving %s.\n\r", ch->name);
+	snprintf(buf, sizeof(buf), "Saving %s.\n\r", ch->name);
 	send_to_char(buf, ch);
 	return;
 }

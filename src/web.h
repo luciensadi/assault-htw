@@ -1,3 +1,5 @@
+#ifndef __WEB_H__
+#define __WEB_H__
 #define WEB_DATA_FILE "../data/web.txt"
 #define STAT_WEB_FILE "../data/stat.php"
 
@@ -20,3 +22,5 @@ struct web_data
     int num_players;
     int tot_players;
 };
+
+#endif

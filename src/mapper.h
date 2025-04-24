@@ -1,3 +1,6 @@
+#ifndef __mapper_h__
+#define __mapper_h__
+
 /*~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-
  ~  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,        ~
  ~  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   ~
@@ -87,3 +90,5 @@ void ShowBMap( CHAR_DATA *ch, bool quest );
 void show_building( CHAR_DATA *ch, sh_int small, int size );
 void ShowSpace( CHAR_DATA *ch );
 void ShowSMap( CHAR_DATA *ch, bool small );
+
+#endif
