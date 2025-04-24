@@ -10,9 +10,7 @@
 #define WEB_DATA_NUM_PLAYERS    5
 #define WEB_DATA_TOT_PLAYERS    6
 
-struct web_data web_data;
-
-struct web_data
+struct webby_data
 {
     char    *last_killed_in_pit;
     char    *last_kills_in_pit;
@@ -21,6 +19,6 @@ struct web_data
     char    *newest_player;
     int num_players;
     int tot_players;
-};
+} web_data;
 
 #endif

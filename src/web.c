@@ -50,8 +50,6 @@ void add_affiliates ( FILE *fp );
 void save_web_data();
 char *format_web( char *str );
 
-struct web_data web_data;
-
 void generate_basic_page( FILE * fp )
 {
     fprintf( fp, "<HTML><HEAD><LINK HREF=tgh.css TYPE=text/css REL=stylesheet></HEAD><BODY bgcolor=\"#ffffff\">" );
