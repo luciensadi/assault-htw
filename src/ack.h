@@ -880,7 +880,8 @@ void do_readrelevel( FILE * fp, RELEVEL_DATA * pRelevel );
 /* Relevel DATA */
 struct system_data {
     RELEVEL_DATA   * pRelevelList;
-} rlvldata;
+};
+extern struct system_data rlvldata;
 
 struct relevel_data {
     RELEVEL_DATA   * pNext;

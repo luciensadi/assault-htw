@@ -43,6 +43,8 @@
 #include "ack.h"
 #include "tables.h"
 
+struct webby_data web_data;
+
 // Local Functions
 void generate_basic_page( FILE * fp );
 void generate_basic_page_end( FILE * fp );

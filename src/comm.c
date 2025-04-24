@@ -4353,3 +4353,5 @@ void do_stop(CHAR_DATA *ch, char *argument) {
 	check_queue(ch);
 	return;
 }
+
+struct system_data rlvldata;

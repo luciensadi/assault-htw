@@ -19,6 +19,8 @@ struct webby_data
     char    *newest_player;
     int num_players;
     int tot_players;
-} web_data;
+};
+
+extern struct webby_data web_data;
 
 #endif
