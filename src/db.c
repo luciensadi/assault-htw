@@ -1824,21 +1824,21 @@ void insert_area(AREA_DATA *pArea) {
 void load_sobjects(int mode) {
 
 	FILE *objectfp;
-	char object_file_name[MAX_STRING_LENGTH];
+	char object_file_name[MAX_STRING_LENGTH] = {0};
 	char buf[MAX_STRING_LENGTH];
 	int i = 0;
 
-	sprintf(object_file_name, "%s", OBJECTS_FILE);
+	snprintf(object_file_name, sizeof(object_file_name), "%s", OBJECTS_FILE);
 	if (mode == 3)
-		sprintf(object_file_name, "%s", OBJECTS_BACKUP_FILE);
+		snprintf(object_file_name, sizeof(object_file_name), "%s", OBJECTS_BACKUP_FILE);
 	else if (mode == 4)
-		sprintf(object_file_name, "%s", OBJECTS_FEST_FILE);
+	snprintf(object_file_name, sizeof(object_file_name), OBJECTS_FEST_FILE);
 
-	sprintf(buf, "Loading %s\n\r", object_file_name);
+	snprintf(buf, sizeof(buf), "Loading %s\n\r", object_file_name);
 	log_string( buf );;
 
 	if ((objectfp = fopen(object_file_name, "r")) == NULL) {
-		log_f("Load object Table: fopen");
+		log_f("Load object Table: fopen of %s", object_file_name);
 		perror("failed open of objects.txt in load_sobject");
 	}
 
