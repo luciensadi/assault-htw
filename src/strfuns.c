@@ -806,7 +806,7 @@ char * str_mod( char * mod_string,  char *argument )
                 sprintf( arg1, "%s", temp );
             }
 
-            if ( arg1 != NULL)
+            if ( *arg1 != '\0')
             {
                 buf2 = str_dup( mod_string );
                 buf3 = buf2;

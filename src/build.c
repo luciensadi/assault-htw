@@ -497,7 +497,7 @@ void build_showobj( CHAR_DATA *ch, char *argument )
     if ( obj->image && ch->desc->mxp && IS_SET(ch->config,CONFIG_IMAGE) )
     {
         sprintf( buf, "\e[1z" );
-        sprintf( buf+strlen(buf), MXPTAG(ch->desc,"IMAGE %s ALIGN=Bottom"), obj->image );
+        sprintf( buf+strlen(buf), MXP_BEG "IMAGE %s ALIGN=Bottom" MXP_END, obj->image );
         sprintf( buf+strlen(buf), "  " );
         safe_strcat(MAX_STRING_LENGTH, buf1, buf );
     }

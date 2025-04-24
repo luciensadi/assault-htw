@@ -3907,7 +3907,7 @@ void _mcleanup(void);
 void do_hotreboot(CHAR_DATA *ch, char * argument) {
 	FILE *fp;
 	DESCRIPTOR_DATA *d, *d_next;
-	char buf[100], buf2[100];
+	char buf[1000], buf2[1000];
 	extern int saving_area;
 	bool compress;
 	bool silent = FALSE;

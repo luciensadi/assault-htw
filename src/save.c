@@ -1384,7 +1384,7 @@ void fread_obj( CHAR_DATA *ch, FILE *fp )
         {
             char log_buf[MSL] = "\0";                              //xxxxx
             sprintf( log_buf, "PFILE: %s BAD!", ch->name );
-            log_f(log_buf);
+            log_string(log_buf);
             monitor_chan( NULL, "Fread_obj: no match.", MONITOR_BAD );
             fread_to_eol( fp );
             return;
@@ -1506,7 +1506,7 @@ void fread_object( FILE *fp )
     if ( ( pObj = get_obj_index(vnum) ) == NULL )
     {
         sprintf( buf, "Bad object, vnum %d.", vnum );
-        log_f(buf);
+        log_string(buf);
         return;
     }
 
@@ -1599,7 +1599,7 @@ void save_map( )
                 for (j=0; j<MAX_MAPS; j++)
                     sprintf( buf+strlen(buf), "%d ", map_table.type[i][j][z] );
                 sprintf( buf+strlen(buf), "\n" );
-                fprintf( fp, buf );
+                fprintf( fp, "%s", buf );
             }
         }
     }
@@ -1633,7 +1633,7 @@ void save_alliances( )
             if ( alliance_table[i].name == NULL )
                 break;
             sprintf( buf, "A %s~ %s~ %d %d\n", alliance_table[i].name, alliance_table[i].leader, alliance_table[i].members, alliance_table[i].kills );
-            fprintf( fp, buf );
+            fprintf( fp, "%s", buf );
         }
         fprintf( fp, "#DONE" );
     }

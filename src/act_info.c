@@ -93,7 +93,7 @@ char *format_obj_to_char( OBJ_DATA *obj, CHAR_DATA *ch, bool fShort )
     {
         char buf1[MAX_STRING_LENGTH];
         sprintf( buf1, "\e[1z" );
-        sprintf( buf1+strlen(buf1), MXPTAG(ch->desc,"IMAGE %s ALIGN=Bottom"), obj->pIndexData->image );
+        sprintf( buf1+strlen(buf1), MXP_BEG "IMAGE %s ALIGN=Bottom" MXP_END, obj->pIndexData->image );
         sprintf( buf1+strlen(buf1), "  " );
         safe_strcat(MAX_STRING_LENGTH, buf, buf1 );
     }
@@ -1398,14 +1398,14 @@ void do_password( CHAR_DATA *ch, char *argument )
     }
     *pArg = '\0';
 
-    if (  ( ch->pcdata->pwd != '\0' )
+    if (  ( ch->pcdata->pwd != NULL )
             && ( arg1[0] == '\0' || arg2[0] == '\0' )  )
     {
         send_to_char( "Syntax: password <old> <new>.\n\r", ch );
         return;
     }
 
-    if (  ( ch->pcdata->pwd != '\0' )
+    if (  ( ch->pcdata->pwd != NULL )
             && ( strcmp( crypt( arg1, ch->pcdata->pwd ), ch->pcdata->pwd ) )  )
     {
         WAIT_STATE( ch, 40 );
@@ -1742,7 +1742,7 @@ void do_channels( CHAR_DATA *ch, char *argument )
                 break;
             }
         }
-        if ( ( bit == 0 ) )
+        if ( bit == 0 )
         {
             send_to_char( "Set or clear which channel?\n\r", ch );
             return;

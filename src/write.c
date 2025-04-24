@@ -195,7 +195,7 @@ void write_interpret( CHAR_DATA * ch, char * argument )
 	/* We have a command. */
 	/* Commands are .help .save .preview .- .clear .lines */
 	argument++;
-	if (argument[0] == '\0' || UPPER(argument[0] == 'S' || UPPER(argument[0]) == 'Q'))
+	if (argument[0] == '\0' || UPPER(argument[0]) == 'S' || UPPER(argument[0]) == 'Q')
 	{
 		bool save;
 		char ** dest;

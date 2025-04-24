@@ -279,7 +279,7 @@ void do_a_build( CHAR_DATA *ch, char *argument )
             buildings++;
         }
     }
-    if ( !built[BUILDING_HQ]>0 )
+    if ( !(built[BUILDING_HQ]>0) )
         for ( i = 0; i<MAX_BUILDING; i++ )
         {
             built[i] = 0;

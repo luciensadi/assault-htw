@@ -802,14 +802,12 @@ void ShowWMap(CHAR_DATA *ch, sh_int small, int size) {
 									|| bld->value[0] >= MAX_BUILDING)
 								bld->value[0] = BUILDING_TURRET;
 							sprintf(ocolor,
-									MXPTAG(ch->desc,
-											"Bl x=%d y=%d owner=%s name='%s'"),
+									MXP_BEG "Bl x=%d y=%d owner=%s name='%s'" MXP_END,
 									bld->x, bld->y, bld->owned,
 									build_table[bld->value[0]].name);
 						} else
 							sprintf(ocolor,
-									MXPTAG(ch->desc,
-											"Bl x=%d y=%d owner=%s name='%s'"),
+									MXP_BEG "Bl x=%d y=%d owner=%s name='%s'" MXP_END,
 									bld->x, bld->y, bld->owned, bld->name);
 					}
 					strcat(catbuf, ocolor);
@@ -911,8 +909,7 @@ void ShowWMap(CHAR_DATA *ch, sh_int small, int size) {
 				if (ch->desc->mxp) {
 					strcat(catbuf, "\e[1z");
 					sprintf(mxpbuf,
-							MXPTAG(ch->desc,
-									"Bl x=%d y=%d owner='Empty' name='%s'"), x,
+							    MXP_BEG  "Bl x=%d y=%d owner='Empty' name='%s'" MXP_END, x,
 							y, map_vhc[x][y][z]->desc);
 					strcat(catbuf, mxpbuf);
 				}

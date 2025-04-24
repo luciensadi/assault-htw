@@ -41,7 +41,7 @@
 /* For forks etc. */
 #include <unistd.h>
 #include <fcntl.h>
-#include <gd.h>
+// #include <gd.h>
 
 #include "ack.h"
 #include "tables.h"
@@ -3001,7 +3001,7 @@ void do_resetpassword( CHAR_DATA *ch, char *argument )
 
     victim = get_char_world(ch, arg1);
 
-    if( victim == '\0' )
+    if( victim == NULL )
     {
         send_to_char( "This character is not playing at this time\n\r", ch);
         return;
@@ -3017,7 +3017,7 @@ void do_resetpassword( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (  ( ch->pcdata->pwd != '\0' )
+    if (  ( ch->pcdata->pwd != NULL )
             && ( arg1[0] == '\0' || arg2[0] == '\0')  )
     {
         send_to_char( "Syntax: password <char> <new>.\n\r", ch );
@@ -4927,11 +4927,11 @@ void do_objclear( CHAR_DATA *ch, char *argument )
     send_to_char( "Old objects cleared.\n\r", ch );
     return;
 }
-void save_map_png();
+// void save_map_png();
 void do_savemap( CHAR_DATA *ch, char *argument )
 {
     save_map();
-    save_map_png();
+    // save_map_png();
     send_to_char( "Done\n\r", ch );
     return;
 }
@@ -6285,6 +6285,7 @@ sect_color_type sect_show[SECT_MAX] = {
 #define SECT_MAGMA          16
 #define SECT_OCEAN			17
  */
+/*
 void save_map_png( )
 {
    gdImagePtr im;
@@ -6314,22 +6315,17 @@ void save_map_png( )
 
    if( ( PngOut = fopen( graphicname, "w" ) ) == NULL )
    {
-      bug( "%s: fopen", __FUNCTION__ );
+      bug( __FUNCTION__ , 1);
       perror( graphicname );
    }
 
-   /*
-    * Output the same image in JPEG format, using the default JPEG quality setting.
-    */
+   // Output the same image in JPEG format, using the default JPEG quality setting.
    gdImagePng( im, PngOut );  //, -1 );
 
-   /*
-    * Close the files.
-    */
+   // Close the files.
    fclose( PngOut );
 
-   /*
-    * Destroy the image in memory.
-    */
+   // Destroy the image in memory.
    gdImageDestroy( im );
 }
+*/

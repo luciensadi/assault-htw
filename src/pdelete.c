@@ -82,19 +82,19 @@ void do_sdelete( CHAR_DATA *ch, char *argument )
     }
     *pArg = '\0';
 
-    if (  ( ch->pcdata->pwd != '\0' )
+    if (  ( ch->pcdata->pwd != NULL )
             && ( arg1[0] == '\0' )  )
     {
         send_to_char( "Syntax: pdelete (password)\n\r", ch );
         return;
     }
-    if (  ( ch->pcdata->pwd != '\0' )
+    if (  ( ch->pcdata->pwd != NULL )
             && ( strcmp( crypt( arg1, ch->pcdata->pwd ), ch->pcdata->pwd ) )  )
     {
         WAIT_STATE( ch, 40 );
         send_to_char( "Wrong password.  Wait 10 seconds.\n\r", ch );
         sprintf( buf, "%s attempted to pdelete, but used the wrong password!", ch->name );
-        log_f( buf );
+        log_string( buf );
         return;
     }
     if ( ch->pcdata->alliance != -1 )
@@ -197,7 +197,7 @@ void do_sdelete( CHAR_DATA *ch, char *argument )
     // unlink(strsave);
     send_to_char("Character reset.\n\rIf you wish to recreate, relog under the same username (@@eAlts are NOT allowed!@@N).\n\r",ch);
     sprintf( buf, "%s has pdeleted!", ch->name );
-    log_f( buf );
+    log_string( buf );
     sprintf( buf, "@@d%s has @@RDELETED!@@N\r\n", ch->name );
     info(buf,81);
     sprintf( buf, "%s has left " mudnamenocolor "!", ch->name );
