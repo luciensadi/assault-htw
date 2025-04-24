@@ -5,8 +5,6 @@ log/*
 area/limbo.are.*
 reports/*
 src/nohup.out
-data/*
-src/nohup.out
 src/vgcore.*
 area/players.num
 area/boards/*
@@ -15,9 +13,9 @@ nohup.out
 .cproject
 .project
 .settings
+.DS_Store
 core
 .dbconfig
 Doxyfile
 area/player
 player_fst
-data/buildings.fst
