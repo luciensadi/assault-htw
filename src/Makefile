@@ -16,7 +16,7 @@ CUSTOMFLAGS =
 #IMC2 - Comment out to disable IMC2 support
 #IMC = 1
 #  -DDEBUG_MEM -DDEBUG_MEM_CORRUPT -DDEBUG_MEM_DUP_FREE
-C_FLAGS = -g3 -Wall -DACK_43 $(PROF) $(NOCRYPT) $(CUSTOMFLAGS) -Dunix -DNOCRYPT -Wno-unused-but-set-variable -Wno-unused-variable
+C_FLAGS = -g3 -Wall -DACK_43 $(PROF) $(NOCRYPT) $(CUSTOMFLAGS) -Dunix -Wno-unused-but-set-variable -Wno-unused-variable
 #C_FLAGS = -g3 -Wall ($PROF) $(NOCRYPT) -DOLD_RAND -Dunix
 #-DDEBUG_MEM -DDEBUG_MEM_CORRUPT
 # MCCP
@@ -38,7 +38,7 @@ O_FILES = act_alliance.o act_comm.o act_info.o act_misc.o act_mob.o act_move.o a
 
 ack: $(O_FILES)
 	rm -f ack
-	$(CC) -o ack $(O_FILES) -lm -lz
+	$(CC) -o ack $(O_FILES) -lm -lz -lcrypt
 	rm -f /ack
 
 .c.o: ack.h
@@ -46,7 +46,7 @@ ack: $(O_FILES)
 
 scan: scan.o
 	rm -f scan
-	$(CC) $(L_FLAGS) -o scan scan.o
+	$(CC) $(L_FLAGS) -lcrypt -o scan scan.o
 
 clean:
 	rm -f $(O_FILES) ack ../area/core
