@@ -59,9 +59,9 @@ struct room_content_type
     char string[10];
 };
 
-struct room_content_type contents[MAX_MAP][MAX_MAP];
+extern struct room_content_type contents[MAX_MAP][MAX_MAP];
 
-int map[MAX_MAP][MAX_MAP];
+extern int map[MAX_MAP][MAX_MAP];
 
 extern sh_int rev_dir[];
 

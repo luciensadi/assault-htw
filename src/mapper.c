@@ -37,6 +37,9 @@
 
 #define INVALID_COORDS(x,y) (( x < BORDER_SIZE || x > MAX_MAPS-BORDER_SIZE || y < BORDER_SIZE || y > MAX_MAPS-BORDER_SIZE ))
 
+struct room_content_type contents[MAX_MAP][MAX_MAP];
+int map[MAX_MAP][MAX_MAP];
+
 extern char * compass_name[];
 extern void do_space_look(CHAR_DATA *ch);
 extern int leads_to(int x, int y, int z, int dir);
